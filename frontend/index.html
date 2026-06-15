@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>考研信息类专业可视化平台</title>
+  <link rel="stylesheet" href="./css/app.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-mark">研</span>
+        <div>
+          <strong>考研数据看板</strong>
+          <small>2020-2026 信息类专业</small>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="#overview">总览</a>
+        <a href="#query">查询</a>
+        <a href="#competition">竞争</a>
+        <a href="#advice">择校</a>
+      </nav>
+      <div class="side-note">
+        <span>本地后端</span>
+        <strong id="apiState">连接中</strong>
+      </div>
+    </aside>
+
+    <main class="main">
+      <section id="overview" class="hero-panel">
+        <div>
+          <p class="eyebrow">Graduate Exam Data Atlas</p>
+          <h1>考研信息类专业可视化平台</h1>
+          <p class="hero-text">基于统一清洗后的 2020-2026 年信息类专业考研数据，围绕院校覆盖、分数分布、专业热度、录取结构和择校难度形成可查询、可对比、可解释的数据看板。</p>
+        </div>
+        <div class="hero-actions">
+          <button id="refreshBtn">刷新数据</button>
+          <button id="exportBtn" class="ghost">导出 CSV</button>
+        </div>
+      </section>
+
+      <section id="metricGrid" class="metric-grid">
+        <div class="loading-card">正在加载数据...</div>
+      </section>
+
+      <section id="query" class="panel query-panel">
+        <div class="panel-head">
+          <div>
+            <h2>筛选与查询</h2>
+            <p>支持年份、院校、院系、专业关键词和初试分数区间联动筛选。</p>
+          </div>
+          <div id="queryCount" class="count-badge">等待查询</div>
+        </div>
+        <div class="filters">
+          <select id="yearSelect"></select>
+          <input id="schoolInput" placeholder="院校关键词，例如 北京 / 华中科技" />
+          <input id="keywordInput" placeholder="院系或专业关键词，例如 计算机 / 软件工程" />
+          <input id="minScoreInput" type="number" placeholder="最低初试" />
+          <input id="maxScoreInput" type="number" placeholder="最高初试" />
+          <button id="searchBtn">查询</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>院校</th>
+                <th>年份</th>
+                <th>院系</th>
+                <th>专业</th>
+                <th>初试</th>
+                <th>复试</th>
+                <th>总成绩</th>
+                <th>录取</th>
+              </tr>
+            </thead>
+            <tbody id="resultBody">
+              <tr><td colspan="8">正在加载查询结果...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="grid two">
+        <article class="panel">
+          <div class="panel-head compact">
+            <div>
+              <h2>年度规模趋势</h2>
+              <p>记录数、院校数、专业数与初试中位数。</p>
+            </div>
+          </div>
+          <div id="yearChart" class="chart"></div>
+        </article>
+        <article class="panel">
+          <div class="panel-head compact">
+            <div>
+              <h2>初试分数段</h2>
+              <p>观察样本集中在哪些分数区间。</p>
+            </div>
+          </div>
+          <div id="scoreBandChart" class="chart"></div>
+        </article>
+      </section>
+
+      <section id="competition" class="grid two">
+        <article class="panel">
+          <div class="panel-head compact">
+            <div>
+              <h2>院校竞争气泡图</h2>
+              <p>X=样本数，Y=初试中位数，气泡大小=专业数。</p>
+            </div>
+          </div>
+          <div id="bubbleChart" class="chart large"></div>
+        </article>
+        <article class="panel">
+          <div class="panel-head compact">
+            <div>
+              <h2>院校覆盖 Top20</h2>
+              <p>记录数与专业数对比。</p>
+            </div>
+          </div>
+          <div id="schoolChart" class="chart large"></div>
+        </article>
+      </section>
+
+      <section class="grid two">
+        <article class="panel">
+          <div class="panel-head compact">
+            <div>
+              <h2>热门专业雷达</h2>
+              <p>专业热度、覆盖院校、初试中位数综合比较。</p>
+            </div>
+          </div>
+          <div id="radarChart" class="chart"></div>
+        </article>
+        <article class="panel">
+          <div class="panel-head compact">
+            <div>
+              <h2>年份 x 分数段热力图</h2>
+              <p>近年分数结构变化。</p>
+            </div>
+          </div>
+          <div id="heatmapChart" class="chart"></div>
+        </article>
+      </section>
+
+      <section class="grid two">
+        <article class="panel">
+          <div class="panel-head compact">
+            <div>
+              <h2>省份覆盖</h2>
+              <p>按院校名称推断地区，辅助择校地域判断。</p>
+            </div>
+          </div>
+          <div id="provinceChart" class="chart"></div>
+        </article>
+        <article class="panel">
+          <div class="panel-head compact">
+            <div>
+              <h2>录取率分数段</h2>
+              <p>分数段内录取比例，辅助判断风险。</p>
+            </div>
+          </div>
+          <div id="admitChart" class="chart"></div>
+        </article>
+      </section>
+
+      <section class="grid two">
+        <article class="panel">
+          <div class="panel-head compact">
+            <div>
+              <h2>重点院校折线趋势</h2>
+              <p>多年份院校初试中位数变化。</p>
+            </div>
+          </div>
+          <div id="trendChart" class="chart large"></div>
+        </article>
+        <article id="advice" class="panel">
+          <div class="panel-head compact">
+            <div>
+              <h2>择校建议表</h2>
+              <p>结合样本数、专业数、分数中位数和波动给出判断。</p>
+            </div>
+          </div>
+          <div id="adviceList" class="advice-list"></div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <script src="./vendor/echarts.min.js"></script>
+  <script src="./js/app.js"></script>
+</body>
+</html>

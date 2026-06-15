@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>考研信息类专业可视化平台</title>
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <div class="hero-copy">
+        <span class="eyebrow">Graduate Exam Data Atlas</span>
+        <h1>考研信息类专业可视化平台</h1>
+        <p>基于 2020-2026 统一清洗数据，围绕院校覆盖、专业结构、分数分布、竞争强度与择校判断构建数据看板。</p>
+      </div>
+      <div class="hero-badge">
+        <div class="badge-title">数据概览</div>
+        <div id="summaryMini" class="badge-grid"><!--SERVER_SUMMARY_MINI--></div>
+      </div>
+    </header>
+
+    <main class="dashboard">
+      <section id="statusBanner" class="status-banner">正在加载数据看板...</section>
+
+      <section class="metrics" id="summaryCards"><!--SERVER_SUMMARY_CARDS--></section>
+
+      <section class="control-panel glass">
+        <div class="section-head">
+          <div>
+            <h2>筛选与查询</h2>
+            <p>支持年份、院校与专业关键词联动过滤</p>
+          </div>
+          <div class="filters">
+            <select id="yearSelect"></select>
+            <input id="schoolInput" placeholder="院校关键词" />
+            <input id="keywordInput" placeholder="院系 / 专业关键词" />
+            <button id="searchBtn">查询</button>
+            <button id="exportBtn" class="ghost">导出 CSV</button>
+          </div>
+        </div>
+        <div class="table-shell">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>院校</th><th>年份</th><th>院系</th><th>专业</th><th>初试</th><th>复试</th><th>总成绩</th><th>录取</th>
+              </tr>
+            </thead>
+            <tbody id="resultBody"><!--SERVER_RESULT_ROWS--></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="grid grid-2">
+        <article class="panel glass">
+          <div class="section-head compact">
+            <div>
+              <h2>年度趋势</h2>
+              <p>记录、院校、专业与分数中位数</p>
+            </div>
+          </div>
+          <div id="yearChart" class="chart-box"><!--SERVER_YEAR_FALLBACK--></div>
+        </article>
+        <article class="panel glass">
+          <div class="section-head compact">
+            <div>
+              <h2>初试分数段</h2>
+              <p>近年分数结构分布</p>
+            </div>
+          </div>
+          <div id="scoreBandChart" class="chart-box"><!--SERVER_SCORE_FALLBACK--></div>
+        </article>
+      </section>
+
+      <section class="grid grid-2">
+        <article class="panel glass">
+          <div class="section-head compact">
+            <div>
+              <h2>院校竞争气泡图</h2>
+              <p>样本数、初试中位数、专业数三维关系</p>
+            </div>
+          </div>
+          <div id="bubbleChart" class="chart-box large"><!--SERVER_BUBBLE_FALLBACK--></div>
+        </article>
+        <article class="panel glass">
+          <div class="section-head compact">
+            <div>
+              <h2>院校 Top10</h2>
+              <p>记录数、专业数与覆盖年份数</p>
+            </div>
+          </div>
+          <div id="topSchoolChart" class="chart-box"><!--SERVER_TOP_SCHOOL_FALLBACK--></div>
+        </article>
+      </section>
+
+      <section class="grid grid-2">
+        <article class="panel glass">
+          <div class="section-head compact">
+            <div>
+              <h2>专业 Top10</h2>
+              <p>高热专业与中位数对比</p>
+            </div>
+          </div>
+          <div id="majorChart" class="chart-box"><!--SERVER_MAJOR_FALLBACK--></div>
+        </article>
+        <article class="panel glass">
+          <div class="section-head compact">
+            <div>
+              <h2>年份 × 分数段热力图</h2>
+              <p>观察近年成绩结构变化</p>
+            </div>
+          </div>
+          <div id="heatmapChart" class="chart-box large"><!--SERVER_HEATMAP_FALLBACK--></div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <script id="initialData" type="application/json"><!--SERVER_INITIAL_DATA--></script>
+  <script>
+    (function () {
+      var banner = document.getElementById('statusBanner');
+      if (banner) banner.textContent = '前端脚本已启动，正在连接本地后端...';
+    })();
+  </script>
+  <script src="./vendor/echarts.min.js?v=20260615_fix4"></script>
+  <script src="./js/main.js?v=20260615_fix4"></script>
+</body>
+</html>
