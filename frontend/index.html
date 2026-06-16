@@ -19,12 +19,12 @@
       <nav class="nav">
         <a href="#overview">总览</a>
         <a href="#query">查询</a>
-        <a href="#competition">竞争</a>
-        <a href="#advice">择校</a>
+        <a href="#charts">图表库</a>
+        <a href="#advice">择校建议</a>
       </nav>
       <div class="side-note">
-        <span>本地后端</span>
-        <strong id="apiState">连接中</strong>
+        <span>本地后端状态</span>
+        <strong id="apiState">连接中...</strong>
       </div>
     </aside>
 
@@ -33,7 +33,7 @@
         <div>
           <p class="eyebrow">Graduate Exam Data Atlas</p>
           <h1>考研信息类专业可视化平台</h1>
-          <p class="hero-text">基于统一清洗后的 2020-2026 年信息类专业考研数据，围绕院校覆盖、分数分布、专业热度、录取结构和择校难度形成可查询、可对比、可解释的数据看板。</p>
+          <p class="hero-text">基于统一清洗后的 2020-2026 年信息类专业考研数据，围绕院校覆盖、专业结构、分数分布、录取差异、竞争强度和地理分布形成可查询、可对比、可解释的数据看板。</p>
         </div>
         <div class="hero-actions">
           <button id="refreshBtn">刷新数据</button>
@@ -49,7 +49,7 @@
         <div class="panel-head">
           <div>
             <h2>筛选与查询</h2>
-            <p>支持年份、院校、院系、专业关键词和初试分数区间联动筛选。</p>
+            <p>支持年份、院校、院系/专业关键词和初试分数区间联动筛选。</p>
           </div>
           <div id="queryCount" class="count-badge">等待查询</div>
         </div>
@@ -82,109 +82,43 @@
         </div>
       </section>
 
-      <section class="grid two">
-        <article class="panel">
-          <div class="panel-head compact">
-            <div>
-              <h2>年度规模趋势</h2>
-              <p>记录数、院校数、专业数与初试中位数。</p>
-            </div>
-          </div>
-          <div id="yearChart" class="chart"></div>
-        </article>
-        <article class="panel">
-          <div class="panel-head compact">
-            <div>
-              <h2>初试分数段</h2>
-              <p>观察样本集中在哪些分数区间。</p>
-            </div>
-          </div>
-          <div id="scoreBandChart" class="chart"></div>
-        </article>
+      <section id="charts" class="section-title">
+        <p class="eyebrow">20 Chart Types</p>
+        <h2>多样化图表展示</h2>
+        <p>每个图表都对应一种不同的数据表达方式，避免重复使用单一横向柱状图。</p>
       </section>
 
-      <section id="competition" class="grid two">
-        <article class="panel">
-          <div class="panel-head compact">
-            <div>
-              <h2>院校竞争气泡图</h2>
-              <p>X=样本数，Y=初试中位数，气泡大小=专业数。</p>
-            </div>
-          </div>
-          <div id="bubbleChart" class="chart large"></div>
-        </article>
-        <article class="panel">
-          <div class="panel-head compact">
-            <div>
-              <h2>院校覆盖 Top20</h2>
-              <p>记录数与专业数对比。</p>
-            </div>
-          </div>
-          <div id="schoolChart" class="chart large"></div>
-        </article>
+      <section class="chart-grid">
+        <article class="panel"><div class="panel-head compact"><div><h2>1. 分组柱状图</h2><p>年度记录数、院校数、专业数对比。</p></div></div><div id="groupedBarChart" class="chart"></div></article>
+        <article class="panel"><div class="panel-head compact"><div><h2>2. 堆叠柱状图</h2><p>各年份不同初试分数段的结构。</p></div></div><div id="stackedBarChart" class="chart"></div></article>
+        <article class="panel"><div class="panel-head compact"><div><h2>3. 双向对称条形图</h2><p>分数段内录取与未录取数量对照。</p></div></div><div id="divergingBarChart" class="chart"></div></article>
+        <article class="panel"><div class="panel-head compact"><div><h2>4. 瀑布图</h2><p>年度记录规模增减变化。</p></div></div><div id="waterfallChart" class="chart"></div></article>
+        <article class="panel wide"><div class="panel-head compact"><div><h2>5. 标准子弹对比图</h2><p>初试中位数与 360 分参考线，含达标/优秀区间背景。</p></div></div><div id="bulletChart" class="chart large"></div></article>
+        <article class="panel wide"><div class="panel-head compact"><div><h2>6. 多系列折线趋势图</h2><p>重点院校多年初试中位数变化。</p></div></div><div id="multiLineChart" class="chart large"></div></article>
+        <article class="panel"><div class="panel-head compact"><div><h2>7. 渐变填充面积图</h2><p>年度记录规模趋势。</p></div></div><div id="areaChart" class="chart"></div></article>
+        <article class="panel"><div class="panel-head compact"><div><h2>8. 区间上下限填充折线图</h2><p>初试分数四分位区间和中位线。</p></div></div><div id="intervalLineChart" class="chart"></div></article>
+        <article class="panel"><div class="panel-head compact"><div><h2>9. 嵌套双层环形图</h2><p>内层为学位类型，外层为专业类别。</p></div></div><div id="nestedDonutChart" class="chart"></div></article>
+        <article class="panel"><div class="panel-head compact"><div><h2>10. 分离突出式饼图</h2><p>录取状态构成，突出最大类别。</p></div></div><div id="explodedPieChart" class="chart"></div></article>
+        <article class="panel"><div class="panel-head compact"><div><h2>11. 多层旭日层级图</h2><p>省份、院校、专业类别的层级结构。</p></div></div><div id="sunburstChart" class="chart"></div></article>
+        <article class="panel"><div class="panel-head compact"><div><h2>12. 桑基流向迁移图</h2><p>数据阶段到年份，再到专业类别的流向。</p></div></div><div id="sankeyChart" class="chart"></div></article>
+        <article class="panel wide"><div class="panel-head compact"><div><h2>13. 三维气泡散点图</h2><p>X=样本数，Y=初试中位数，气泡大小/颜色=专业数。</p></div></div><div id="bubbleChart" class="chart large"></div></article>
+        <article class="panel wide"><div class="panel-head compact"><div><h2>14. 矩阵热力对比图</h2><p>院校与专业类别的初试中位数矩阵。</p></div></div><div id="matrixHeatmapChart" class="chart large"></div></article>
+        <article class="panel"><div class="panel-head compact"><div><h2>15. 地理热力分布图</h2><p>省份记录数在经纬度坐标上的热力分布。</p></div></div><div id="geoHeatChart" class="chart"></div></article>
+        <article class="panel"><div class="panel-head compact"><div><h2>16. 多指标雷达对比图</h2><p>热门专业类别的热度、覆盖、分数和录取率。</p></div></div><div id="radarChart" class="chart"></div></article>
+        <article class="panel wide"><div class="panel-head compact"><div><h2>17. 平行坐标多维分布图</h2><p>院校样本数、专业数、年份覆盖、分数和录取率。</p></div></div><div id="parallelChart" class="chart large"></div></article>
+        <article class="panel"><div class="panel-head compact"><div><h2>18. 层级矩形树状图</h2><p>省份、院校、专业类别的规模占比。</p></div></div><div id="treemapChart" class="chart"></div></article>
+        <article class="panel"><div class="panel-head compact"><div><h2>19. 关键词权重词云图</h2><p>专业名称中的高频信息类关键词。</p></div></div><div id="wordCloudPanel" class="word-cloud"></div></article>
+        <article class="panel wide"><div class="panel-head compact"><div><h2>20. 全国地理点位散点地图</h2><p>院校点位、记录规模和初试中位数。</p></div></div><div id="pointMapChart" class="chart large"></div></article>
       </section>
 
-      <section class="grid two">
-        <article class="panel">
-          <div class="panel-head compact">
-            <div>
-              <h2>热门专业雷达</h2>
-              <p>专业热度、覆盖院校、初试中位数综合比较。</p>
-            </div>
+      <section id="advice" class="panel">
+        <div class="panel-head compact">
+          <div>
+            <h2>最终择校建议</h2>
+            <p>综合样本数、专业数、初试中位数和录取率给出参考梯度。</p>
           </div>
-          <div id="radarChart" class="chart"></div>
-        </article>
-        <article class="panel">
-          <div class="panel-head compact">
-            <div>
-              <h2>年份 x 分数段热力图</h2>
-              <p>近年分数结构变化。</p>
-            </div>
-          </div>
-          <div id="heatmapChart" class="chart"></div>
-        </article>
-      </section>
-
-      <section class="grid two">
-        <article class="panel">
-          <div class="panel-head compact">
-            <div>
-              <h2>省份覆盖</h2>
-              <p>按院校名称推断地区，辅助择校地域判断。</p>
-            </div>
-          </div>
-          <div id="provinceChart" class="chart"></div>
-        </article>
-        <article class="panel">
-          <div class="panel-head compact">
-            <div>
-              <h2>录取率分数段</h2>
-              <p>分数段内录取比例，辅助判断风险。</p>
-            </div>
-          </div>
-          <div id="admitChart" class="chart"></div>
-        </article>
-      </section>
-
-      <section class="grid two">
-        <article class="panel">
-          <div class="panel-head compact">
-            <div>
-              <h2>重点院校折线趋势</h2>
-              <p>多年份院校初试中位数变化。</p>
-            </div>
-          </div>
-          <div id="trendChart" class="chart large"></div>
-        </article>
-        <article id="advice" class="panel">
-          <div class="panel-head compact">
-            <div>
-              <h2>择校建议表</h2>
-              <p>结合样本数、专业数、分数中位数和波动给出判断。</p>
-            </div>
-          </div>
-          <div id="adviceList" class="advice-list"></div>
-        </article>
+        </div>
+        <div id="adviceList" class="advice-list"></div>
       </section>
     </main>
   </div>

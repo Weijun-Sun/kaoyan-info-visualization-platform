@@ -21,8 +21,8 @@ def find_free_port() -> int:
 
 def main() -> None:
     sys.path.insert(0, str(BACKEND_DIR))
-    from server import Handler
     from http.server import ThreadingHTTPServer
+    from server import Handler
 
     port = find_free_port()
     server = ThreadingHTTPServer((HOST, port), Handler)
@@ -30,7 +30,7 @@ def main() -> None:
 
     print(f"考研信息类专业可视化平台已启动: {url}")
     print(f"项目目录: {BASE_DIR}")
-    print("目录结构: data 存数据，backend 存后端，frontend 存前端")
+    print("目录结构: data 存放数据和数据库，backend 存放后端代码，frontend 存放前端代码")
     print("按 Ctrl+C 关闭平台")
 
     thread = threading.Thread(target=server.serve_forever, daemon=True)
